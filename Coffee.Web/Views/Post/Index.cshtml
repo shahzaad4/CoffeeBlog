@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Coffee.Web.DTOs.PostDto>
+
+@{
+    ViewBag.Title = "All Posts";
+}
+
+<style>
+    .page-heading {
+        font-family: 'Playfair Display', serif;
+        color: #d6c2b3;
+    }
+
+    .coffee-card {
+        background: #2e2a27;
+        border: 1px solid #6f4e37;
+        border-radius: 10px;
+        color: #f4f1ee;
+        transition: transform 0.2s;
+    }
+
+        .coffee-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+    .coffee-card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #f4f1ee;
+    }
+
+    .coffee-card-text {
+        font-size: 0.95rem;
+        color: #e0d6ce;
+    }
+
+    .card-footer {
+        background: none;
+        border-top: 1px solid #5a3e2b;
+    }
+
+    .btn-read {
+        background-color: #6f4e37;
+        color: white;
+    }
+
+        .btn-read:hover {
+            background-color: #5a3e2b;
+        }
+
+    .btn-new-post {
+        background-color: #5a3e2b;
+        color: white;
+        border: none;
+    }
+
+        .btn-new-post:hover {
+            background-color: #4a3426;
+        }
+</style>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center page-heading">☕ Latest Coffee Blog Posts</h2>
+
+    <div class="text-end mb-4">
+        <a href="/Post/Create" class="btn btn-new-post">+ New Post</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">No posts available yet. Time to brew the first thought!</div>
+    }
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var post in Model)
+        {
+            <div class="col">
+                <div class="card coffee-card h-100 p-3">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="coffee-card-title">@post.Title</h5>
+                        <p class="coffee-card-text mt-2">
+                            @Html.Raw(post.Content.Length > 120
+                                     ? post.Content.Substring(0, 120) + "..."
+                                     : post.Content)
+                        </p>
+                        <a href="@Url.Action("Details", "Post", new { slug = post.Slug })" class="btn btn-read mt-3 align-self-start">Read More</a>
+                    </div>
+                    <div class="card-footer text-muted text-end small">
+                        Posted on @post.CreatedAt.ToString("dd MMM yyyy")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
