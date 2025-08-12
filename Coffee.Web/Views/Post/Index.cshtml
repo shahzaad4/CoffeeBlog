@@ -62,10 +62,13 @@
 <div class="container mt-5">
     <h2 class="mb-4 text-center page-heading">☕ Latest Coffee Blog Posts</h2>
 
-    <div class="text-end mb-4">
-        <a href="/Post/Create" class="btn btn-new-post">+ New Post</a>
-    </div>
+    @if(User.Identity.IsAuthenticated){
+        <div class="text-end mb-4">
+            <a href="/Post/Create" class="btn btn-new-post">+ New Post</a>
+        </div>
 
+    }
+    
     @if (!Model.Any())
     {
         <div class="alert alert-warning text-center">No posts available yet. Time to brew the first thought!</div>

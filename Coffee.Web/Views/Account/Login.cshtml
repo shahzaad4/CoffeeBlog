@@ -1,0 +1,30 @@
+﻿@model Coffee.Web.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="container mt-5" style="max-width:500px;">
+    <h2 class="mb-4 text-center">
+        Admin Login
+    </h2>
+
+    <form asp-action="Login" method="post">
+        <div class="form-group mb-3">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3" >
+            <input asp-for="RememberMe" class="form-cheform-check-input" />
+            <label asp-for="RememberMe" class="form-check-label"></label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+</div>

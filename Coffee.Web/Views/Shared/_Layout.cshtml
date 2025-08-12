@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -47,43 +50,18 @@
             .btn-coffee:hover {
                 background-color: #5a3e2b;
             }
-
-        .coffee-card {
-            background: #fff8e7;
-            border: 1px solid #d2b48c;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(125, 92, 41, 0.2);
-            transition: 0.3s;
-        }
-
-            .coffee-card:hover {
-                box-shadow: 0 6px 12px rgba(125, 92, 41, 0.35);
-            }
-
-        .coffee-card-title {
-            color: #4b3621;
-            font-weight: bold;
-        }
-
-        .coffee-card-text {
-            color: #5c4033;
-        }
-
-        footer small {
-            color: #d6c2b3;
-        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Brewed Thoughts ☕</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                <!-- Left: Logo -->
+                <a class="navbar-brand me-auto" asp-controller="Home" asp-action="Index">Brewed Thoughts ☕</a>
+
+                <!-- Middle: Navigation -->
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -96,12 +74,27 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
                         </li>
-                        <!-- Optional: auth links later -->
-                        @*<li class="nav-item">
-                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                        </li>*@
                     </ul>
                 </div>
+
+                <!-- Right: Login/Logout -->
+                <div class="d-flex ms-auto">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-light btn-sm" asp-controller="Account" asp-action="Login">Login</a>
+                    }
+                </div>
+
+                <!-- Toggle button for mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
         </nav>
     </header>

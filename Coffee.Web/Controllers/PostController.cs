@@ -3,6 +3,7 @@ using Coffee.Web.Data;
 using Coffee.Web.DTOs;
 using Coffee.Web.Models;
 using Coffee.Web.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -44,6 +45,7 @@ namespace Coffee.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public IActionResult Create()
         {
             return View();
@@ -51,6 +53,7 @@ namespace Coffee.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreatePostDto dto)
         {
             if (!ModelState.IsValid) return View(dto);
@@ -65,6 +68,7 @@ namespace Coffee.Web.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var post = await repo.GetByIdAsync(id);
@@ -78,6 +82,7 @@ namespace Coffee.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid id,UpdatePostDto dto)
         {
             if (!ModelState.IsValid) return View(dto);
@@ -92,6 +97,7 @@ namespace Coffee.Web.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await repo.DeleteAsync(id);
